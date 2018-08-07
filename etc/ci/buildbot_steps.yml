@@ -80,6 +80,10 @@ linux-rel-intermittent:
   - ./etc/ci/check_intermittents.sh --log-raw intermittents.log
 
 linux-rel-nogate:
+ env:
+   CC: gcc-5
+   CXX: g++-5
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
@@ -97,6 +101,8 @@ linux-dev:
   env:
     CCACHE: sccache
     RUSTC_WRAPPER: sccache
+    CC: gcc-5
+    CXX: g++-5
   commands:
     - ./mach clean-nightlies --keep 3 --force
     - ./mach clean-cargo-cache --keep 3 --force
@@ -116,6 +122,8 @@ linux-rel-wpt:
   env:
     CCACHE: sccache
     RUSTC_WRAPPER: sccache
+    CC: gcc-5
+    CXX: g++-5
   commands:
     - ./mach clean-nightlies --keep 3 --force
     - ./mach clean-cargo-cache --keep 3 --force
@@ -130,6 +138,8 @@ linux-rel-css:
   env:
     CCACHE: sccache
     RUSTC_WRAPPER: sccache
+    CC: gcc-5
+    CXX: g++-5
   commands:
     - ./mach clean-nightlies --keep 3 --force
     - ./mach clean-cargo-cache --keep 3 --force
@@ -141,6 +151,10 @@ linux-rel-css:
     - ./etc/ci/clean_build_artifacts.sh
 
 linux-nightly:
+ env:
+  CC: gcc-5
+  CXX: g++-5
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
@@ -153,6 +167,10 @@ linux-nightly:
   - rm -rf ./python/_virtualenv
 
 android:
+ env:
+   HOST_CC: gcc-5
+   HOST_CXX: g++-5
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
@@ -164,6 +182,10 @@ android:
   - ./etc/ci/clean_build_artifacts.sh
 
 android-x86:
+ env:
+   HOST_CC: gcc-5
+   HOST_CXX: g++-5
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
@@ -176,6 +198,10 @@ android-x86:
   - ./etc/ci/clean_build_artifacts.sh
 
 android-nightly:
+ env:
+   HOST_CC: gcc-5
+   HOST_CXX: g++-5
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
@@ -186,18 +212,30 @@ android-nightly:
   - ./etc/ci/clean_build_artifacts.sh
 
 arm32:
+ env:
+   CC: gcc-5
+   CXX: g++-5
+   CFLAGS: --target arm-unknown-linux-gnueabihf
+   CXXFLAGS: --target arm-unknown-linux-gnueabihf
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
-  - ./mach build --rel --target=arm-unknown-linux-gnueabihf
+  - env --unset CC_arm-unknown-linux-gnueabihf --unset CXX_arm-unknown-linux-gnueabihf ./mach build --rel --target=arm-unknown-linux-gnueabihf
   - bash ./etc/ci/lockfile_changed.sh
   - ./etc/ci/clean_build_artifacts.sh
 
 arm64:
+ env:
+   CC: gcc-5
+   CXX: g++-5
+   CFLAGS: --target aarch64-unknown-linux-gnu
+   CXXFLAGS: --target aarch64-unknown-linux-gnu
+ commands:
   - ./mach clean-nightlies --keep 3 --force
   - ./mach clean-cargo-cache --keep 3 --force
   - ./etc/ci/clean_build_artifacts.sh
-  - ./mach build --rel --target=aarch64-unknown-linux-gnu
+  - env --unset CC_aarch64-unknown-linux-gnueabihf --unset CXX_aarch64-unknown-linux-gnueabihf ./mach build --rel --target=aarch64-unknown-linux-gnu
   - bash ./etc/ci/lockfile_changed.sh
   - ./etc/ci/clean_build_artifacts.sh
 
